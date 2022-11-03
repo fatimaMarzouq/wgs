@@ -25,6 +25,7 @@ Route::get('/images', [App\Http\Controllers\HomeController::class, 'images'])->n
 Route::get('/images_details/{id}', [App\Http\Controllers\HomeController::class, 'images_details']);
 Route::post('areaAccount', '\App\Http\Controllers\HomeController@areaAccount')->name('areaAccount');
 Route::post('accountOutlet', '\App\Http\Controllers\HomeController@accountOutlet')->name('accountOutlet');
+Route::post('allDetails', '\App\Http\Controllers\HomeController@allDetails')->name('allDetails');
 Route::post('compress', '\App\Http\Controllers\HomeController@compress')->name('compress');
 Route::post('excel_download', '\App\Http\Controllers\HomeController@excel_download')->name('excel_download');
 Route::post('captureStore', '\App\Http\Controllers\HomeController@captureStore')->name('captureStore');

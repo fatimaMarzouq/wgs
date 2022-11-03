@@ -15,6 +15,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ asset('resources/css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('resources/css/custom-style.css') }}">
+        <script src="{{ asset('resources/js/custom-js.js') }}"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
             integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -56,41 +58,51 @@
             </div>
         @endif
         <!--  <section class="logo-sec m-0" >
-          <div class="logo-div">
-            <a href=""><img src="{{ asset('resources/images/niche-logo-official.png') }}" align="Niche"></a>
-          </div>
-        </section> -->
+                  <div class="logo-div">
+                    <a href=""><img src="{{ asset('resources/images/niche-logo-official.png') }}" align="Niche"></a>
+                  </div>
+                </section> -->
 
         <section class="heading-sec m-0 p-0">
             <div class="main-head-div p-0">
                 <h1>DATA CAPTURE FORM-WG&S</h1>
             </div>
         </section>
-        <form class="form-horizontal" id="form_customer" onsubmit="return validation(this)" action="{{ route('captureStore') }}" method="POST"
-            enctype="multipart/form-data">
+        <form class="form-horizontal" id="form_customer" onsubmit="return validation(this)"
+            action="{{ route('captureStore') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <section class="filter-sec m-0">
                 <div class="container p-lg-0">
                     <div class="row align-items-center">
                         <div class="col-lg-12 col-md-12 col-12">
                             <div class="row g-3">
-                                <div class="col-lg-4 col-md-4 col-12">
+                                <div class="col-lg-3 col-md-3 col-12">
+                                    <b>Store Code:</b>
+                                    <div class="dropdown">
+                                        <button onclick="dropdownFunction()" class="dropbtn">Choose Store Code</button>
+                                        <div id="storeDropdown" class="dropdown-content">
+                                            <input type="text" placeholder="Search.." id="searchInput"
+                                                onkeyup="filterFunction()">
+                                            @foreach ($codes as $code)
+                                                <a>{{ $code->AccountNumbeAuto }}</a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-12">
                                     <b>Area:</b><select id="area" name="area" class="form-select">
                                         <option value="">Choose Area</option>
-                                        @foreach ($area as $area2)
-                                            <option>{{ $area2->Area }}</option>
-                                        @endforeach
+
                                     </select>
                                 </div>
-
-                                <div class="col-lg-4 col-md-4 col-12">
+                                <div class="col-lg-3 col-md-3 col-12">
                                     <b>Account:</b><select id="account" name="account" class="form-select">
                                         <option value="">Choose Account</option>
 
                                     </select>
                                 </div>
-
-                                <div class="col-lg-4 col-md-4 col-12">
+                                <div class="col-lg-3 col-md-3 col-12">
                                     <b>Outlet:</b><select id="outlet" name="outlet" class="form-select">
                                         <option value="">Choose Outlet</option>
 
@@ -120,18 +132,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-lg-6 col-md-6 col-6">
-              <div class="dropArea">
-                <div class="dropForm">
-                 <input type="file" accept="image/*" name="gallery[]" multiple="" capture="camera">
-                  <label class="button" for="fileElem">
-                   <img src="{{ asset('resources/images/camera-icon.png') }}">
-                   <p class="text-center">Camera</p>
-                 </label>
-               </div>
-             </div>
-           </div> -->
-
                                 </div>
                             </div>
                         </div>
@@ -150,17 +150,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-lg-6 col-md-6 col-6">
-        <div class="dropArea">
-          <div class="dropForm">
-           <input type="file" accept="image/*" name="gallery2[]" multiple="" capture="camera">
-            <label class="button" for="fileElem">
-             <img src="{{ asset('resources/images/camera-icon.png') }}">
-             <p class="text-center">Camera</p>
-           </label>
-         </div>
-       </div>
-     </div> -->
 
                                 </div>
                             </div>
@@ -180,17 +169,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-lg-6 col-md-6 col-6">
-      <div class="dropArea">
-        <div class="dropForm">
-          <input type="file"  name="gallery3[]" multiple="" accept="image/*" capture="camera" />
-          <label class="button" for="fileElem">
-           <img src="{{ asset('resources/images/camera-icon.png') }}">
-           <p class="text-center">Camera</p>
-         </label>
-       </div>
-     </div>
-    </div> -->
 
                                 </div>
                             </div>
@@ -247,9 +225,11 @@
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-lg-12 col-md-12 col-12">
-                                                        <input type="number" min="0" step="0.1" name="price[]" class="form-control" id="inputType"
+                                                        <input type="number" min="0" step="0.1"
+                                                            name="price[]" class="form-control" id="inputType"
                                                             placeholder="Type Here">
-                                                            <small class="req-price text-danger d-none">The price is required</small>
+                                                        <small class="req-price text-danger d-none">The price is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -303,9 +283,11 @@
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-lg-12 col-md-12 col-12">
-                                                        <input type="number" min="0" step="0.1" name="price[]" class="form-control"
-                                                            id="inputType" placeholder="Type Here">
-                                                            <small class="req-price text-danger d-none">The price is required</small>
+                                                        <input type="number" min="0" step="0.1"
+                                                            name="price[]" class="form-control" id="inputType"
+                                                            placeholder="Type Here">
+                                                        <small class="req-price text-danger d-none">The price is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -360,9 +342,11 @@
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-lg-12 col-md-12 col-12">
-                                                        <input type="number" min="0" step="0.1" name="price[]" class="form-control"
-                                                            id="inputType" placeholder="Type Here">
-                                                            <small class="req-price text-danger d-none">The price is required</small>
+                                                        <input type="number" min="0" step="0.1"
+                                                            name="price[]" class="form-control" id="inputType"
+                                                            placeholder="Type Here">
+                                                        <small class="req-price text-danger d-none">The price is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -417,9 +401,11 @@
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-lg-12 col-md-12 col-12">
-                                                        <input type="number" min="0" step="0.1" name="price[]" class="form-control"
-                                                            id="inputType" placeholder="Type Here">
-                                                            <small class="req-price text-danger d-none">The price is required</small>
+                                                        <input type="number" min="0" step="0.1"
+                                                            name="price[]" class="form-control" id="inputType"
+                                                            placeholder="Type Here">
+                                                        <small class="req-price text-danger d-none">The price is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -474,9 +460,11 @@
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-lg-12 col-md-12 col-12">
-                                                        <input type="number" min="0" step="0.1" name="price[]" class="form-control"
-                                                            id="inputType" placeholder="Type Here">
-                                                            <small class="req-price text-danger d-none">The price is required</small>
+                                                        <input type="number" min="0" step="0.1"
+                                                            name="price[]" class="form-control" id="inputType"
+                                                            placeholder="Type Here">
+                                                        <small class="req-price text-danger d-none">The price is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -531,9 +519,11 @@
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-lg-12 col-md-12 col-12">
-                                                        <input type="number" min="0" step="0.1" name="price[]" class="form-control"
-                                                            id="inputType" placeholder="Type Here">
-                                                            <small class="req-price text-danger d-none">The price is required</small>
+                                                        <input type="number" min="0" step="0.1"
+                                                            name="price[]" class="form-control" id="inputType"
+                                                            placeholder="Type Here">
+                                                        <small class="req-price text-danger d-none">The price is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -587,9 +577,11 @@
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-lg-12 col-md-12 col-12">
-                                                        <input type="number" min="0" step="0.1" name="price[]" class="form-control"
-                                                            id="inputType" placeholder="Type Here">
-                                                            <small class="req-price text-danger d-none">The price is required</small>
+                                                        <input type="number" min="0" step="0.1"
+                                                            name="price[]" class="form-control" id="inputType"
+                                                            placeholder="Type Here">
+                                                        <small class="req-price text-danger d-none">The price is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -643,9 +635,11 @@
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-lg-12 col-md-12 col-12">
-                                                        <input type="number" min="0" step="0.1" name="price[]" class="form-control"
-                                                            id="inputType" placeholder="Type Here">
-                                                            <small class="req-price text-danger d-none">The price is required</small>
+                                                        <input type="number" min="0" step="0.1"
+                                                            name="price[]" class="form-control" id="inputType"
+                                                            placeholder="Type Here">
+                                                        <small class="req-price text-danger d-none">The price is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -699,9 +693,11 @@
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-lg-12 col-md-12 col-12">
-                                                        <input type="number" min="0" step="0.1" name="price[]" class="form-control"
-                                                            id="inputType" placeholder="Type Here">
-                                                            <small class="req-price text-danger d-none">The price is required</small>
+                                                        <input type="number" min="0" step="0.1"
+                                                            name="price[]" class="form-control" id="inputType"
+                                                            placeholder="Type Here">
+                                                        <small class="req-price text-danger d-none">The price is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -755,9 +751,11 @@
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-lg-12 col-md-12 col-12">
-                                                        <input type="number" min="0" step="0.1" name="price[]" class="form-control"
-                                                            id="inputType" placeholder="Type Here">
-                                                            <small class="req-price text-danger d-none">The price is required</small>
+                                                        <input type="number" min="0" step="0.1"
+                                                            name="price[]" class="form-control" id="inputType"
+                                                            placeholder="Type Here">
+                                                        <small class="req-price text-danger d-none">The price is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -811,9 +809,11 @@
                                             <td>
                                                 <div class="row g-3">
                                                     <div class="col-lg-12 col-md-12 col-12">
-                                                        <input type="number" min="0" step="0.1" name="price[]" class="form-control"
-                                                            id="inputType" placeholder="Type Here">
-                                                            <small class="req-price text-danger d-none">The price is required</small>
+                                                        <input type="number" min="0" step="0.1"
+                                                            name="price[]" class="form-control" id="inputType"
+                                                            placeholder="Type Here">
+                                                        <small class="req-price text-danger d-none">The price is
+                                                            required</small>
                                                     </div>
                                                 </div>
                                             </td>
@@ -893,53 +893,44 @@
     <script>
         $(document).ready(function() {
 
-            $("#area").change(function() {
-                var area = $(this).val();
-                $.ajax({
-                    url: "<?php echo route('areaAccount'); ?>",
-                    method: 'POST',
-                    data: {
-                        "_token": $('#csrftoken').val(),
-                        area: area
-                    },
-                    success: function(response) {
-                        var value = JSON.parse(response);
-                        var ss = [];
-                        for (var i = 0; i < value.length; i++) {
-                            //alert(value[i]['id']);
-                            var ss = '<option >' + value[i]['ParentAccount'] + '</option>';
-                            $('#account').append(ss);
+            $("#storeDropdown a").each(function() {
+                $(this).click(function() {
+                    let code = $(this).text();
+                    $.ajax({
+                        url: "<?php echo route('allDetails'); ?>",
+                        method: 'POST',
+                        data: {
+                            "_token": $('#csrftoken').val(),
+                            code: code
+                        },
+                        success: function(response) {
+                            $('#account').children().remove().end()
+                            $('#outlet').children().remove().end()
+                            $('#area').children().remove().end()
+                            var value = JSON.parse(response);
+                            var ss = [];
+                            for (var i = 0; i < value.length; i++) {
+                                //alert(value[i]['id']);
+                                $('#account').append('<option >' + value[i][
+                                    'ParentAccount'
+                                ] + '</option>');
+                                $('#outlet').append('<option >' + value[i][
+                                    'AccountName'
+                                ] + '</option>');
+                                $('#area').append('<option >' + value[i]['Area'] +
+                                    '</option>');
+                            }
+                            $(".dropbtn").text(code);
+                            $("#searchInput").val('');
+                            $("#searchInput").keyup();
+
+                            document.getElementById("storeDropdown").classList.toggle(
+                                "show");
                         }
+                    });
 
-
-                    }
-
-                });
-            });
-
-            $("#account").change(function() {
-                var account = $(this).val();
-                $.ajax({
-                    url: "<?php echo route('accountOutlet'); ?>",
-                    method: 'POST',
-                    data: {
-                        "_token": $('#csrftoken').val(),
-                        account: account
-                    },
-                    success: function(response) {
-                        var value = JSON.parse(response);
-                        var ss = [];
-                        for (var i = 0; i < value.length; i++) {
-                            //alert(value[i]['id']);
-                            var ss = '<option >' + value[i]['AccountName'] + '</option>';
-                            $('#outlet').append(ss);
-                        }
-
-
-                    }
-
-                });
-            });
+                })
+            })
 
             $(".compress").change(function() {
                 $("#form_customer").submit();
@@ -968,24 +959,24 @@
             $("#save").click(function(event) {
                 $("#form_customer").unbind('submit');
             });
-            $("input[name='price[]']").on("keypress keyup change",function(){
+            $("input[name='price[]']").on("keypress keyup change", function() {
                 $(this).parent().find(".req-price").addClass("d-none")
             });
 
         });
-        function validation(e) {
-            let flag =true;
-let outletAvailable=$(e).find("select[name='outletAvailable[]']");
-let prices=$(e).find("input[name='price[]']");
-let reqprice=$(e).find(".req-price");
-for(i=0;i<prices.length;i++){
-    if($(outletAvailable[i]).val()=="Yes" && $(prices[i]).val()=="" ){
-        $(reqprice[i]).removeClass("d-none");
-        flag=false
-    }
-}
-return flag;
-}
 
+        function validation(e) {
+            let flag = true;
+            let outletAvailable = $(e).find("select[name='outletAvailable[]']");
+            let prices = $(e).find("input[name='price[]']");
+            let reqprice = $(e).find(".req-price");
+            for (i = 0; i < prices.length; i++) {
+                if ($(outletAvailable[i]).val() == "Yes" && $(prices[i]).val() == "") {
+                    $(reqprice[i]).removeClass("d-none");
+                    flag = false
+                }
+            }
+            return flag;
+        }
     </script>
 @endsection

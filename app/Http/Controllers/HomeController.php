@@ -28,6 +28,7 @@ class HomeController extends Controller
     {
     $data['area']= DB::table('forms')->select('Area')->distinct()->get();
     $user = auth()->user();
+    $data['codes'] = DB::table('forms')->select('AccountNumbeAuto')->distinct()->get();
 
     $data['userId']=$user->id;
     //dd($data['area']);
@@ -65,12 +66,19 @@ class HomeController extends Controller
     {
 
       $area = $request->area;
-     $areaAccount = DB::table('forms')->select('ParentAccount')->distinct()->where('Area',$area)->get();
+     $areaAccount = DB::table('forms')->select('AccountNumbeAuto')->distinct()->where('Area',$area)->get();
      
       echo json_encode($areaAccount);
             
     }
-
+    public function allDetails(Request $request)
+    {
+      $code = $request->code;
+     $allDetail = DB::table('forms')->select('Area','ParentAccount','AccountName')->distinct()->where('AccountNumbeAuto',$code)->get();
+     
+      echo json_encode($allDetail);
+            
+    }
      public function excel_download(Request $request)
     {
 
@@ -83,7 +91,7 @@ class HomeController extends Controller
     {
 
       $account = $request->account;
-     $accountOutlet = DB::table('forms')->select('AccountName')->distinct()->where('ParentAccount',$account)->get();
+     $accountOutlet = DB::table('forms')->select('AccountName')->distinct()->where('AccountNumbeAuto',$account)->get();
      
       echo json_encode($accountOutlet);
             
