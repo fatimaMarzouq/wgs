@@ -38,7 +38,7 @@ class HomeController extends Controller
     public function report()
     {
 
-        $data['areaAccount'] = DB::table('capture_datas')->select('users.name as user','capture_datas.area','capture_datas.account','capture_datas.outlet','capture_datas.perfectServe','capture_datas.remarks','description_details.category','description_details.description','description_details.outletAvailable','description_details.drinksMenu','description_details.price','description_details.visibleBar')->join('description_details', 'capture_datas.id', '=', 'description_details.captureId')->join('users', 'capture_datas.userId', '=', 'users.id')->get();
+        $data['areaAccount'] = DB::table('capture_datas')->select('users.name as Username','capture_datas.AccountNumbeAuto as Unique Code','capture_datas.account as Acount Name','capture_datas.outlet as Outlet Name','capture_datas.area as Area','description_details.description as SKU Description','description_details.outletAvailable as Available at the outlet','description_details.drinksMenu as Listed in the Menu','description_details.price as Price per shot','description_details.visibleBar as Visible at the back bar','capture_datas.perfectServe as hendricks perfect serve','description_details.remarks')->join('description_details', 'capture_datas.id', '=', 'description_details.captureId')->join('users', 'capture_datas.userId', '=', 'users.id')->get();
       $data['areaAccount']= json_encode($data['areaAccount']);
         return view('report',$data);
     }
@@ -162,6 +162,7 @@ class HomeController extends Controller
             'account' => $request->account,
             'outlet' => $request->outlet,  
             'perfectServe' => $request->perfectServe, 
+            'AccountNumbeAuto' => $request->AccountNumbeAuto, 
             'remarks' => $request->remarks,           
            
             ];

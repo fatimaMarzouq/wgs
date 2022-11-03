@@ -78,6 +78,7 @@
                             <div class="row g-3">
                                 <div class="col-lg-3 col-md-3 col-12">
                                     <b>Store Code:</b>
+                                    <input type="hidden" id="AccountNumbeAuto" name="AccountNumbeAuto" value="">
                                     <div class="dropdown">
                                         <button onclick="dropdownFunction()" class="dropbtn">Choose Store Code</button>
                                         <div id="storeDropdown" class="dropdown-content">
@@ -896,6 +897,7 @@
             $("#storeDropdown a").each(function() {
                 $(this).click(function() {
                     let code = $(this).text();
+                    $("#AccountNumbeAuto").val(code);
                     $.ajax({
                         url: "<?php echo route('allDetails'); ?>",
                         method: 'POST',
