@@ -30,3 +30,4 @@ Route::post('compress', '\App\Http\Controllers\HomeController@compress')->name('
 Route::post('excel_download', '\App\Http\Controllers\HomeController@excel_download')->name('excel_download');
 Route::post('captureStore', '\App\Http\Controllers\HomeController@captureStore')->name('captureStore');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+// Route::get('/fillCode', '\App\Http\Controllers\HomeController@fillCode');

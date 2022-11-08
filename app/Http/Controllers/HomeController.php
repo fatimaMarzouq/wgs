@@ -285,7 +285,14 @@ class HomeController extends Controller
     }
 
 
+    // public function fillCode(){
+    //  $forms=DB::table('forms')->select('AccountName','AccountNumbeAuto')->get();
+    //  foreach($forms as $form ){
+    //     DB::table('capture_datas')->where('outlet', $form->AccountName)->update(array('AccountNumbeAuto' => $form->AccountNumbeAuto));  
 
+    //  }
+
+    // }
 
 
 }
