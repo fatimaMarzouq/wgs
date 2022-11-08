@@ -32,7 +32,7 @@ tr:nth-child(even) {
 @foreach($images as $images)
   <tr>
      <td>{{  $i++ }}</td>
-    <td style="text-align: center;"><a href="{{ url('public/images_details/').'/'.$images->id}}" target="_blank">{{  $images->outlet }}</a></td>
+     <td style="text-align: center;"><a href="{{ url('public/images_details/').'/'.$images->id}}" target="_blank">{{  $images->AccountNumbeAuto }}</a></td>
      
     </tr>
   @endforeach
