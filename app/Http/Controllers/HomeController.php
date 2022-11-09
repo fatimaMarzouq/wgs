@@ -164,6 +164,7 @@ class HomeController extends Controller
             'perfectServe' => $request->perfectServe, 
             'AccountNumbeAuto' => $request->AccountNumbeAuto, 
             'remarks' => $request->remarks,           
+            'created_at' => date("Y-m-d H:i:s"),           
            
             ];
             //echo '<pre>';print_r($capture_datas);
@@ -285,14 +286,14 @@ class HomeController extends Controller
     }
 
 
-    // public function fillCode(){
-    //  $forms=DB::table('forms')->select('AccountName','AccountNumbeAuto')->get();
-    //  foreach($forms as $form ){
-    //     DB::table('capture_datas')->where('outlet', $form->AccountName)->update(array('AccountNumbeAuto' => $form->AccountNumbeAuto));  
+    public function fillCode(){
+     $forms=DB::table('forms')->select('AccountName','AccountNumbeAuto')->get();
+     foreach($forms as $form ){
+        DB::table('capture_datas')->where('outlet', $form->AccountName)->update(array('AccountNumbeAuto' => $form->AccountNumbeAuto));  
 
-    //  }
+     }
 
-    // }
+    }
 
 
 }
