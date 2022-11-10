@@ -22,7 +22,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/report', [App\Http\Controllers\HomeController::class, 'report'])->name('report');
 Route::get('/images', [App\Http\Controllers\HomeController::class, 'images'])->name('images');
-Route::get('/images_details/{id}', [App\Http\Controllers\HomeController::class, 'images_details']);
+Route::get('/images_details/{id}', [App\Http\Controllers\HomeController::class, 'images_details'])->name('images_details');
 Route::post('areaAccount', '\App\Http\Controllers\HomeController@areaAccount')->name('areaAccount');
 Route::post('accountOutlet', '\App\Http\Controllers\HomeController@accountOutlet')->name('accountOutlet');
 Route::post('allDetails', '\App\Http\Controllers\HomeController@allDetails')->name('allDetails');
