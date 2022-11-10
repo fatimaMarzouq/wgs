@@ -28,7 +28,7 @@ class HomeController extends Controller
     {
     $data['area']= DB::table('forms')->select('Area')->distinct()->get();
     $user = auth()->user();
-    $data['codes'] = DB::table('forms')->select('AccountNumbeAuto')->distinct()->get();
+    $data['codes'] = DB::table('forms')->select('AccountNumbeAuto')->where('AccountNumbeAuto', 'like', '%WGS%')->get();
 
     $data['userId']=$user->id;
     //dd($data['area']);
@@ -47,7 +47,7 @@ class HomeController extends Controller
     {
 
         // $data['images'] = DB::table('capture_datas')->select('capture_datas.outlet','drinkmenus.image as drinkmenus_img','entrances.image as entrance_img','backbars.image as backbar_img')->join('drinkmenus', 'capture_datas.id', '=', 'drinkmenus.captureId')->join('entrances', 'capture_datas.id', '=', 'entrances.captureId')->join('backbars', 'capture_datas.id', '=', 'backbars.captureId')->distinct()->get();
-        $data['images'] = DB::table('capture_datas')->select('capture_datas.AccountNumbeAuto','capture_datas.outlet','capture_datas.id')->get();
+        $data['images'] = DB::table('capture_datas')->select('capture_datas.AccountNumbeAuto','capture_datas.outlet','capture_datas.id')->where('AccountNumbeAuto', 'like', '%WGS%')->get();
      
         return view('images',$data);
     }
@@ -56,8 +56,8 @@ class HomeController extends Controller
     {
         
         $data['images'] = DB::table('capture_datas')->select('capture_datas.outlet','drinkmenus.image as drinkmenus_img')->join('drinkmenus', 'capture_datas.id', '=', 'drinkmenus.captureId')->where('capture_datas.id',$id)->get();
-    $data['images2'] = DB::table('capture_datas')->select('capture_datas.outlet','entrances.image as entrance_img')->join('entrances', 'capture_datas.id', '=', 'entrances.captureId')->where('capture_datas.id',$id)->get();
-    $data['images3'] = DB::table('capture_datas')->select('capture_datas.outlet','backbars.image as backbar_img')->join('backbars', 'capture_datas.id', '=', 'backbars.captureId')->where('capture_datas.id',$id)->get();
+        $data['images2'] = DB::table('capture_datas')->select('capture_datas.outlet','entrances.image as entrance_img')->join('entrances', 'capture_datas.id', '=', 'entrances.captureId')->where('capture_datas.id',$id)->get();
+        $data['images3'] = DB::table('capture_datas')->select('capture_datas.outlet','backbars.image as backbar_img')->join('backbars', 'capture_datas.id', '=', 'backbars.captureId')->where('capture_datas.id',$id)->get();
      
          return view('images_details',$data);
     }
