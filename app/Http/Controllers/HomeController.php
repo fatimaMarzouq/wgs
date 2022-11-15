@@ -47,7 +47,7 @@ class HomeController extends Controller
     {
 
         // $data['images'] = DB::table('capture_datas')->select('capture_datas.outlet','drinkmenus.image as drinkmenus_img','entrances.image as entrance_img','backbars.image as backbar_img')->join('drinkmenus', 'capture_datas.id', '=', 'drinkmenus.captureId')->join('entrances', 'capture_datas.id', '=', 'entrances.captureId')->join('backbars', 'capture_datas.id', '=', 'backbars.captureId')->distinct()->get();
-        $data['images'] = DB::table('capture_datas')->select('capture_datas.AccountNumbeAuto','capture_datas.outlet','capture_datas.id')->where('AccountNumbeAuto', 'like', '%WGS%')->get();
+        $data['images'] = DB::table('capture_datas')->select('capture_datas.AccountNumbeAuto','capture_datas.outlet','capture_datas.id')->where('AccountNumbeAuto', 'like', '%WGS%')->orderBy('created_at', 'desc')->get();
      
         return view('images',$data);
     }
