@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Niche</title>
+  <title> Niche </title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -12,13 +12,13 @@
    @if(count($images)>0)
 <p>&emsp;<span style="font-size: 25px;font-weight: bold">Outlet Name: {{ $images[0]->outlet }}</span></p>
 @endif
- &emsp;<span style="font-size: 25px;font-weight: bold">Drik menus Section</span><br>
+ &emsp;<span style="font-size: 25px;font-weight: bold">Drink menus Section</span><br>
  <div class="row">
   @if($images)
 @foreach($images as $images)
   
    <div class="col-md-6" >
-      &emsp;<br><a href="{{ asset('images/').'/'.$images->drinkmenus_img}}" download><img src="{{ asset('images/').'/'.$images->drinkmenus_img}}" /></a>
+      &emsp;<br><a href="{{ url('public/images/').'/'.$images->drinkmenus_img}}" download><img src="{{ url('public/images/').'/'.$images->drinkmenus_img}}" /></a>
       </div>
    
   @endforeach
@@ -30,7 +30,7 @@
   
    
    <div class="col-md-6" >
-      &emsp;<br><a href="{{ asset('images/').'/'.$images->entrance_img}}" download><img src="{{ asset('images/').'/'.$images->entrance_img}}" /></a>
+      &emsp;<br><a href="{{ url('public/images/').'/'.$images->entrance_img}}" download><img src="{{ url('public/images/').'/'.$images->entrance_img}}" /></a>
       </div>
     
    
@@ -42,7 +42,7 @@
   
     
      <div class="col-md-6" >
-      &emsp;<br><a href="{{ asset('images/').'/'.$images->backbar_img}}" download><img src="{{ asset('images/').'/'.$images->backbar_img}}" /></a>
+      &emsp;<br><a href="{{ url('public/images/').'/'.$images->backbar_img}}" download><img src="{{ url('public/images/').'/'.$images->backbar_img}}" /></a>
       </div>
    
   @endforeach
